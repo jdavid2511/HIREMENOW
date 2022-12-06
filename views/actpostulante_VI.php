@@ -8,26 +8,16 @@ class actpostulante_VI{
     {
         require_once "models/postulante_MO.php";
         require_once "models/departamento_MO.php"; 
-        require_once "models/estado_civil_MO.php";
 
         $conexion = new conexion();
         $postulante_MO = new postulante_MO($conexion);
         $arreglo=$postulante_MO->seleccionar($_SESSION['documento']);
         $arreglo1=$postulante_MO->seleccionar1($_SESSION['documento']);
         
-        $departamento_MO = new departamento_MO($conexion);
-        $arreglo_departamento= $departamento_MO->seleccionar();
-        
-        $estado_civil_MO = new estado_civil_MO($conexion);
-        $arreglo_estado_civil= $estado_civil_MO->seleccionar();
-
         $objeto_postulante=$arreglo[0];
         $objeto_postulante1=$arreglo1[0];
-        $objeto_estado_civil=$arreglo_estado_civil[0]; 
-        $objeto_departamento=$arreglo_departamento[0];
-      
-        $nombre_estadocivil = $objeto_estado_civil -> nombre_estado_civil;
-        $nombre_departamento = $objeto_departamento -> nombre;
+        
+        $documento = $objeto_postulante -> documento;
         $nombre1= $objeto_postulante -> nombre1;
         $nombre2= $objeto_postulante -> nombre2;
         $apellido1= $objeto_postulante -> apellido1;
@@ -38,10 +28,6 @@ class actpostulante_VI{
         $hoja_vida = $objeto_postulante -> hoja_vida;
         $fecha_nto = $objeto_postulante -> fecha_nto;
         $direccion = $objeto_postulante -> direccion;
-        $sexo = $objeto_postulante -> sexo;
-        $id_estado_civi = $objeto_postulante -> id_estado_civil;
-        $cod_ciudad = $objeto_postulante ->cod_ciudad;
-        $cod_dpto = $objeto_postulante -> cod_dpto;
         $contrasena = $objeto_postulante1 -> contrasena;
         $usuario = $objeto_postulante1 -> usuario;
 
@@ -91,37 +77,8 @@ class actpostulante_VI{
                         value="<?php echo $contrasena ?>">
                 </div>
                 <div class="form-group">
-                    <label for="huella_digital">Sexo</label>
-                    <select class="form-control" id="sexo" name="sexo">
-                        <option value="<?php echo $sexo ?>"><?php echo $sexo ?></option>
-                        <option value="M">M (masculino)</option>
-                        <option value="F">F (femenino)</option>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label for="direccion">Direccion</label>
                     <input type="text" class="form-control" name="direccion" value="<?php echo $direccion ?>">
-                </div>
-                <div class="form-group">
-                    <label for="estado_civil">Estado Civil</label>
-                    <select class="form-control" name="id_estado_civil">
-                        <option value=""><?php echo $nombre_estadocivil; ?></option>
-                        <?php
-                            if ($arreglo_estado_civil) {
-
-                                foreach ($arreglo_estado_civil as $objeto_estado_civil) {
-                                    $nombre = $objeto_estado_civil->nombre_estado_civil;
-                                    $id_estado_civil = $objeto_estado_civil->id_estado_civil;
-
-                            ?>
-
-                        <option value="<?php echo $id_estado_civil; ?>">
-                            <?php echo  $nombre; ?> </option>
-                        <?php
-                                                        }
-                                                    }
-                                                    ?>
-                    </select>
                 </div>
                 <div class="form-group">
                     <label for="hoja_vida">hoja de vida</label>
@@ -151,7 +108,6 @@ class actpostulante_VI{
 function actualizarpostulante() {
 
     var cadena = new FormData(document.querySelector('#formulario_actualizar_postulante'));
-
     fetch('postulante_CO/actualizarPostulante', {
             method: 'POST',
             body: cadena

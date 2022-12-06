@@ -2,8 +2,6 @@
 
 require_once "../models/departamento_MO.php";
 require_once "../lib/conexion.php";
- 
- 
 
     $conexion = new conexion();
 

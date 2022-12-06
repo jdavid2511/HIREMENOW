@@ -59,21 +59,10 @@ class accesos_CO{
             exit(json_encode($arreglo_respuesta));
 
           }
-      
-      $arreglo = $accesos_MO -> iniciarSesion($usuario,$contrasena);
-      
-      if($arreglo){
 
-         $objeto_accesos=$arreglo[0];
-
-         $documento=$objeto_accesos -> documento;
-      
-         $_SESSION['documento']= $documento;
+        function salir(){
+          session_destroy();
+        }
       }
-      header('Location: index.php');
-    }
-    function salir(){
-      session_destroy();
-    }
 }
 ?>

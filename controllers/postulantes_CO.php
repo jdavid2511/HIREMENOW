@@ -127,17 +127,20 @@ require_once "../lib/conexion.php";
         ];
     
             exit(json_encode($arreglo_respuesta));
-      }
-
-      $postulante_MO -> agregarpostulantes($documento,$nombre1, $nombre2,$apellido1,$apellido2,$telefono,$correo,$huella_digital,$hoja_vida,$fecha_nto,$direccion,$sexo,$id_estado_civil,$cod_ciudad,$cod_dpto);
-      $postulante_MO -> agregaracceso($documento,$usuario,$contrasena);
-      $arreglo_respuesta=[
-          
-        "documento" => $documento,
+    }
+      else{
+        $arreglo_respuesta=[
+            
         "estado" => "EXITO",
         "mensaje"=> "Registro agregado"
 
     ];
+      }
+
+      $postulante_MO -> agregarpostulantes($documento,$nombre1, $nombre2,$apellido1,$apellido2,$telefono,$correo,$huella_digital,$hoja_vida,$fecha_nto,$direccion,$sexo,$id_estado_civil,$cod_ciudad,$cod_dpto);
+      $postulante_MO -> agregaracceso($documento,$usuario,$contrasena);
+      
+      
      
 
 ?>

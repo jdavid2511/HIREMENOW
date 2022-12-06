@@ -7,26 +7,20 @@ class menu_VI
     function verMenu()
     {
         require_once "models/postulante_MO.php";
+        require_once "models/vacante_MO.php";
+        require_once "models/seleccionar_MO.php";
+        
         $conexion = new conexion();
         $postulante_MO = new postulante_MO($conexion);
         $arreglo=$postulante_MO->seleccionar($_SESSION['documento']);
+
+        $vacante_MO = new vacante_MO($conexion);
+        $arreglo_vacante = $vacante_MO->seleccionar();
         
         $objeto_postulante=$arreglo[0];
-    
-        $documento= $objeto_postulante -> documento;
+        
         $nombre1= $objeto_postulante -> nombre1;
-        $nombre2= $objeto_postulante -> nombre2;
         $apellido1= $objeto_postulante -> apellido1;
-        $apellido2= $objeto_postulante -> apellido2;
-        $telefono= $objeto_postulante -> telefono;
-        $correo= $objeto_postulante -> correo;
-        $huella_digital = $objeto_postulante -> huella_digital;
-        $hoja_vida = $objeto_postulante -> hoja_vida;
-        $fecha_nto = $objeto_postulante -> fecha_nto;
-        $direccion = $objeto_postulante -> direccion;
-        $id_estado_civi = $objeto_postulante -> id_estado_civil;
-        $cod_ciudad = $objeto_postulante ->cod_ciudad;
-        $cod_dpto = $objeto_postulante -> cod_dpto;
         
 ?>
 
@@ -46,6 +40,14 @@ class menu_VI
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/slicknav.min.css">
     <link rel="stylesheet" href="vendors/toastr/toastr.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+
     <!-- amchart css -->
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css"
         media="all" />
@@ -73,7 +75,7 @@ class menu_VI
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/images/icon/logo.png" alt="logo"></a>
+                    <a href="index.php"><img src="assets/images/icon/logo.png" alt="logo"></a>
                 </div>
             </div>
             <div class="main-menu">
@@ -81,13 +83,16 @@ class menu_VI
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li class="active">
-                                <a href="javascript:void(0)" aria-expanded="true"><i
-                                        class="ti-dashboard"></i><span>dashboard</span></a>
-                                <ul class="collapse">
-                                    <li class="active"><a href="index.html">ICO dashboard</a></li>
-                                    <li><a href="index2.html">Ecommerce dashboard</a></li>
-                                    <li><a href="index3.html">SEO dashboard</a></li>
-                                </ul>
+                                <a href="#" onclick="verModulo('postulacion_VI/postulacion');" aria-expanded="true"><i
+                                        class="ti-pin2"></i><span>POSTULACIONES</span></a>
+
+                            </li>
+                        </ul>
+                        <ul class="metismenu" id="menu">
+                            <li class="active">
+                                <a href="#" onclick="verModulo('actpostulante_VI/actualizarPostulante');"
+                                    aria-expanded="true"><i class="ti-user"></i><span>DATOS PERSONALES</span></a>
+
                             </li>
                         </ul>
                     </nav>
@@ -116,6 +121,15 @@ class menu_VI
                     </div>
                 </div>
             </div>
+            <?php 
+            if ($arreglo_vacante) {
+
+                foreach ($arreglo_vacante as $objeto_vacante) {
+                $nombre_vacante = $objeto_vacante->nombre;
+                $detalle = $objeto_vacante -> detalles;
+                $id_vacante = $objeto_vacante->id_vacante;
+            }}
+            ?>
             <!-- header area end -->
             <!-- page title area start -->
             <div class="page-title-area">
@@ -124,192 +138,61 @@ class menu_VI
                         <div class="breadcrumbs-area clearfix">
                             <h4 class="page-title pull-left">Dashboard</h4>
                             <ul class="breadcrumbs pull-left">
-                                <li><a href="#" onclick="verModulo('menu_VI/verMenu');">Home</a></li>
-                                <li><span>Dashboard</span></li>
+                                <li><a href="index.php">Home</a></li>
+                                <li><span>Vacantes</span></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-6 clearfix">
+                    <div class=" col-sm-6 clearfix">
                         <div class="user-profile pull-right">
                             <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">
-                                <?php echo $nombre1,' ', $apellido1 ?> <i class="fa fa-angle-down"></i></h4>
+                                <?php echo $nombre1,' ', $apellido1 ?> <i class="fa fa-angle-down"></i>
+                            </h4>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item"
                                     onclick="verModulo('actpostulante_VI/actualizarPostulante');">Visualizar/Editar
                                     Datos</a>
-                                <a class="dropdown-item" href="#">CERRAR SESION</a>
+                                <a class="dropdown-item" href="#" onclick="salir()">CERRAR SESION</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="main-content-inner">
+            <div class=" main-content-inner">
                 <div class="card-area">
                     <div class="tile_count" id="contenido">
-                        <div class="row">
+                        <div class="row" id="form_postular">
+                            <?php   
+                                    if ($arreglo_vacante) {
+
+                                        foreach ($arreglo_vacante as $objeto_vacante) {
+                                            $nombre_vacante = $objeto_vacante->nombre;
+                                            $detalle = $objeto_vacante -> detalles;
+                                            $id_vacante = $objeto_vacante->id_vacante;
+                                            
+                                    ?>
                             <div class="col-lg-4 col-md-6 mt-5">
                                 <div class="card card-bordered">
+
                                     <img class="card-img-top img-fluid" src="assets/images/card/card-img1.jpg"
                                         alt="image">
                                     <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
+
+                                        <h5 class="title"><?php echo $nombre_vacante; ?></h5>
+                                        <p class="card-text"><?php echo $detalle; ?></p>
+                                        <input type="hidden" name="fecha_ini" value="<?php echo $fecha_ini ?>">
+                                        <input type="hidden" name="fecha_fin" value="<?php echo $fecha_fin ?>">
+                                        <input type="hidden" name="documento" value="<?php echo $documento ?>">
+                                        <input type="hidden" name="id_vacante" value="<?php echo $id_vacante ?>">
+                                        <a href="#" onclick="postular();" class="btn btn-primary">postularme</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 mt-5">
-                                <div class="card card-bordered">
-                                    <img class="card-img-top img-fluid" src="assets/images/card/card-img2.jpg"
-                                        alt="image">
-                                    <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mt-5">
-                                <div class="card card-bordered">
-                                    <img class="card-img-top img-fluid" src="assets/images/card/card-img3.jpg"
-                                        alt="image">
-                                    <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mt-5">
-                                <div class="card card-bordered">
-                                    <img class="card-img-top img-fluid" src="assets/images/card/card-img4.jpg"
-                                        alt="image">
-                                    <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mt-5">
-                                <div class="card card-bordered">
-                                    <img class="card-img-top img-fluid" src="assets/images/card/card-img5.jpg"
-                                        alt="image">
-                                    <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mt-5">
-                                <div class="card card-bordered">
-                                    <img class="card-img-top img-fluid" src="assets/images/card/card-img6.jpg"
-                                        alt="image">
-                                    <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mt-5">
-                                <div class="card card-bordered">
-                                    <img class="card-img-top img-fluid" src="assets/images/card/card-img7.jpg"
-                                        alt="image">
-                                    <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mt-5">
-                                <div class="card card-bordered">
-                                    <img class="card-img-top img-fluid" src="assets/images/card/card-img8.jpg"
-                                        alt="image">
-                                    <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mt-5">
-                                <div class="card card-bordered">
-                                    <img class="card-img-top img-fluid" src="assets/images/card/card-img9.jpg"
-                                        alt="image">
-                                    <div class="card-body">
-                                        <h5 class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Harum,
-                                            dicta.</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Mollitia adipisci quidem, quam nam reiciendis facere blanditiis atque neque
-                                            architecto omnis magni totam, voluptate maiores, iusto molestias incidunt
-                                            unde
-                                            nesciunt cum.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go More....</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                                }
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -317,184 +200,6 @@ class menu_VI
         </div>
     </div>
     <!-- page container area end -->
-    <!-- offset area start -->
-    <div class="offset-area">
-        <div class="offset-close"><i class="ti-close"></i></div>
-        <ul class="nav offset-menu-tab">
-            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
-            <li><a data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
-        <div class="offset-content tab-content">
-            <div id="activity" class="tab-pane fade in show active">
-                <div class="recent-activity">
-                    <div class="timeline-task">
-                        <div class="icon bg1">
-                            <i class="fa fa-envelope"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Rashed sent you an email</h4>
-                            <span class="time"><i class="ti-time"></i>09:35</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
-                        </p>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg2">
-                            <i class="fa fa-check"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Added</h4>
-                            <span class="time"><i class="ti-time"></i>7 Minutes Ago</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur.
-                        </p>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg2">
-                            <i class="fa fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>You missed you Password!</h4>
-                            <span class="time"><i class="ti-time"></i>09:20 Am</span>
-                        </div>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg3">
-                            <i class="fa fa-bomb"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Member waiting for you Attention</h4>
-                            <span class="time"><i class="ti-time"></i>09:35</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
-                        </p>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg3">
-                            <i class="ti-signal"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>You Added Kaji Patha few minutes ago</h4>
-                            <span class="time"><i class="ti-time"></i>01 minutes ago</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
-                        </p>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg1">
-                            <i class="fa fa-envelope"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Ratul Hamba sent you an email</h4>
-                            <span class="time"><i class="ti-time"></i>09:35</span>
-                        </div>
-                        <p>Hello sir , where are you, i am egerly waiting for you.
-                        </p>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg2">
-                            <i class="fa fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Rashed sent you an email</h4>
-                            <span class="time"><i class="ti-time"></i>09:35</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
-                        </p>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg2">
-                            <i class="fa fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Rashed sent you an email</h4>
-                            <span class="time"><i class="ti-time"></i>09:35</span>
-                        </div>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg3">
-                            <i class="fa fa-bomb"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Rashed sent you an email</h4>
-                            <span class="time"><i class="ti-time"></i>09:35</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
-                        </p>
-                    </div>
-                    <div class="timeline-task">
-                        <div class="icon bg3">
-                            <i class="ti-signal"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Rashed sent you an email</h4>
-                            <span class="time"><i class="ti-time"></i>09:35</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div id="settings" class="tab-pane fade">
-                <div class="offset-settings">
-                    <h4>General Settings</h4>
-                    <div class="settings-list">
-                        <div class="s-settings">
-                            <div class="s-sw-title">
-                                <h5>Notifications</h5>
-                                <div class="s-swtich">
-                                    <input type="checkbox" id="switch1" />
-                                    <label for="switch1">Toggle</label>
-                                </div>
-                            </div>
-                            <p>Keep it 'On' When you want to get all the notification.</p>
-                        </div>
-                        <div class="s-settings">
-                            <div class="s-sw-title">
-                                <h5>Show recent activity</h5>
-                                <div class="s-swtich">
-                                    <input type="checkbox" id="switch2" />
-                                    <label for="switch2">Toggle</label>
-                                </div>
-                            </div>
-                            <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
-                        </div>
-                        <div class="s-settings">
-                            <div class="s-sw-title">
-                                <h5>Show your emails</h5>
-                                <div class="s-swtich">
-                                    <input type="checkbox" id="switch3" />
-                                    <label for="switch3">Toggle</label>
-                                </div>
-                            </div>
-                            <p>Show email so that easily find you.</p>
-                        </div>
-                        <div class="s-settings">
-                            <div class="s-sw-title">
-                                <h5>Show Task statistics</h5>
-                                <div class="s-swtich">
-                                    <input type="checkbox" id="switch4" />
-                                    <label for="switch4">Toggle</label>
-                                </div>
-                            </div>
-                            <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
-                        </div>
-                        <div class="s-settings">
-                            <div class="s-sw-title">
-                                <h5>Notifications</h5>
-                                <div class="s-swtich">
-                                    <input type="checkbox" id="switch5" />
-                                    <label for="switch5">Toggle</label>
-                                </div>
-                            </div>
-                            <p>Use checkboxes when looking for yes or no answers.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- offset area end -->
     <!-- jquery latest version -->
     <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
     <!-- bootstrap 4 js -->
@@ -505,6 +210,21 @@ class menu_VI
     <script src="assets/js/jquery.slimscroll.min.js"></script>
     <script src="assets/js/jquery.slicknav.min.js"></script>
     <script src="vendors/toastr/toastr.min.js"></script>
+
+    <script type="text/javascript" src="datatables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="datatables/main.js"></script>
+
+    <script src="datatables/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="datatables/datatables/JSZip-2.5.0/jszip.min.js"></script>
+    <script src="datatables/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script src="datatables/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <script src="datatables/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 
     <!-- start chart js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
@@ -525,11 +245,39 @@ class menu_VI
     <script src="assets/js/scripts.js"></script>
 
     <script>
-    function verModulo(ruta) {
+    function salir() {
+        $.post('accesos_CO/salir', function() {
+            location.href = "index.php";
+        });
+    }
 
+    function verModulo(ruta) {
         $.post(ruta, function(respuesta) {
             $('#contenido').html(respuesta);
         });
+    }
+
+    function postular() {
+        var cadena = new FormData(document.querySelector('#form_posatular'));
+
+        fetch("./controllers/seleccion_CO.php", {
+                method: 'POST',
+                body: cadena
+            })
+            .then(respuesta => respuesta.json())
+            .then(respuesta => {
+
+                if (respuesta.estado == 'EXITO') {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        text: respuesta.mensaje,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+
+            });
     }
     </script>
     </sbody>

@@ -26,7 +26,7 @@ class postulante_MO{
 
     return $arreglo;
   }
-  function seleccionar1 ($documento='' ){
+  function seleccionar1 ($documento='', $usuario=''){
 
     if (empty($documento)) {
 
@@ -55,15 +55,15 @@ class postulante_MO{
     $this->conexion->consultar($sql);
   }
   
-  function actualizarpostulante($documento, $nombre1, $nombre2,$apellido1,$apellido2,$telefono,$correo,$huella_digital,$hoja_vida,$fecha_nto,$direccion,$id_estado_civil)
+  function actualizarpostulante($documento, $nombre1, $nombre2,$apellido1,$apellido2,$telefono,$correo,$huella_digital,$hoja_vida,$fecha_nto,$direccion)
   {
 
-    $sql = "update postulante set nombre1='$nombre1',nombre2='$nombre2', apellido1='$apellido1',apellido2='$apellido2',telefono='$telefono',huella_digital='$huella_digital',hoja_vida='$hoja_vida',fecha_nto='$fecha_nto',direccion='$direccion',id_estado_civil='$id_estado_civil',correo='$correo'  where documento='$documento'";
+    $sql = "update postulante set nombre1='$nombre1',nombre2='$nombre2', apellido1='$apellido1',apellido2='$apellido2',telefono='$telefono',huella_digital='$huella_digital',hoja_vida='$hoja_vida',fecha_nto='$fecha_nto',direccion='$direccion',correo='$correo'  where documento='$documento'";
 
     $this->conexion->consultar($sql);
   }
   function actualizaracceso($documento,$usuario,$contrasena){
-    $sql = "uptade acceso set usuario='$usuario',contrasena='$contrasena' where documento='$documento'";
+    $sql = "update acceso set usuario='$usuario',contrasena='$contrasena' where documento='$documento'";
   
     $this->conexion->consultar($sql);
   }

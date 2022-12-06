@@ -119,92 +119,130 @@ class accesos_VI
                                         <h4>REGISTRO</h4>
                                     </div>
                                     <div class="login-form-body">
-                                        <div class="form-gp">
-                                            <label for="nombre1">Primer Nombre</label>
-                                            <input type="text" name="nombre1">
-                                            <div class="text-danger"></div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-gp">
+                                                    <label for="nombre1">Primer Nombre</label>
+                                                    <input type="text" name="nombre1">
+                                                    <div class="text-danger"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-gp">
+                                                    <label for="nombre2">Segundo Nombre</label>
+                                                    <input type="text" name="nombre2">
+                                                    <div class="text-danger"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <label for="nombre2">Segundo Nombre</label>
-                                            <input type="text" name="nombre2">
-                                            <div class="text-danger"></div>
-                                        </div>
-                                        <div class="form-gp">
-                                            <label for="apellido1">Primer Apellido</label>
-                                            <input type="text" name="apellido1">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-gp">
+                                                    <label for="apellido1">Primer Apellido</label>
+                                                    <input type="text" name="apellido1">
 
-                                            <div class="text-danger"></div>
-                                        </div>
-                                        <div class="form-gp">
-                                            <label for="apellido2">Segundo Apellido</label>
-                                            <input type="text" name="apellido2">
+                                                    <div class="text-danger"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-gp">
+                                                    <label for="apellido2">Segundo Apellido</label>
+                                                    <input type="text" name="apellido2">
 
-                                            <div class="text-danger"></div>
+                                                    <div class="text-danger"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <label for="usuario">Usuario</label>
-                                            <input type="text" name="usuario">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-gp">
+                                                    <label for="usuario">Usuario</label>
+                                                    <input type="text" name="usuario">
 
-                                            <div class="text-danger"></div>
-                                        </div>
-                                        <div class="form-gp">
-                                            <label for="documento">Documento</label>
-                                            <input type="number" name="documento">
+                                                    <div class="text-danger"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-gp">
+                                                    <label for="correo">Correo</label>
+                                                    <input type="email" name="correo">
 
-                                            <div class="text-danger"></div>
+                                                    <div class="text-danger"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <label for="telefono">Telefono</label>
-                                            <input type="number" name="telefono">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-gp">
+                                                    <label for="documento">Documento</label>
+                                                    <input type="number" name="documento">
+                                                    <div class="text-danger"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-gp">
+                                                <label for="telefono">Telefono</label>
+                                                <input type="number" name="telefono">
+                                                <div class="text-danger"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-gp">
+                                                <label for="huella_digital">huella digital</label>
+                                                <input type="text" name="huella_digital">
 
-                                            <div class="text-danger"></div>
+                                                <div class="text-danger"></div>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <label for="correo">Correo</label>
-                                            <input type="email" name="correo">
+                                        <div class="col-6">
+                                            <div class="form-gp">
+                                                <label for="hoja_vida">hoja de vida</label>
+                                                <input type="text" name="hoja_vida">
 
-                                            <div class="text-danger"></div>
+                                                <div class="text-danger"></div>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <label for="constrasena">Contraseña</label>
-                                            <input type="password" name="contrasena">
-
-                                            <div class="text-danger"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-gp">
+                                                <label for="fecha_nto">Fecha de Nacimiento</label>
+                                                <input type="date" name="fecha_nto">
+                                                <div class="text-danger"></div>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <label for="huella_digital">huella digital</label>
-                                            <input type="text" name="huella_digital">
-
-                                            <div class="text-danger"></div>
+                                        <div class="col-6">
+                                            <div class="form-gp">
+                                                <select class="form-control" id="sexo" name="sexo">
+                                                    <option value="">Seleccione Sexo</option>
+                                                    <option value="M">M</option>
+                                                    <option value="F">F</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <label for="hoja_vida">hoja de vida</label>
-                                            <input type="text" name="hoja_vida">
-
-                                            <div class="text-danger"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-gp">
+                                                <label for="exampleInputName4">direccion</label>
+                                                <input type="text" name="direccion">
+                                                <div class="text-danger"></div>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <label for="fecha_nto">Fecha de Nacimiento</label>
-                                            <input type="date" name="fecha_nto">
-                                            <div class="text-danger"></div>
+                                        <div class="col-6">
+                                            <div class="form-gp">
+                                                <label for="constrasena">Contraseña</label>
+                                                <input type="password" name="contrasena">
+                                                <div class="text-danger"></div>
+                                            </div>
                                         </div>
-                                        <div class="form-gp">
-                                            <select class="form-control" id="sexo" name="sexo">
-                                                <option value="">Seleccione Sexo</option>
-                                                <option value="M">M</option>
-                                                <option value="F">F</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-gp">
-                                            <label for="exampleInputName4">direccion</label>
-                                            <input type="text" name="direccion">
-                                            <div class="text-danger"></div>
-                                        </div>
-                                        <div class="form-gp">
-                                            <label for="estado_civil"></label>
-                                            <select class="form-control" name="id_estado_civil" id="">
-                                                <option value="">Seleccione Estado Civil</option>
-                                                <?php
+                                    </div>
+                                    <div class="form-gp">
+                                        <label for="estado_civil"></label>
+                                        <select class="form-control" name="id_estado_civil" id="">
+                                            <option value="">Seleccione Estado Civil</option>
+                                            <?php
                                                     if ($arreglo_estado_civil) {
 
                                                         foreach ($arreglo_estado_civil as $objeto_estado_civil) {
@@ -213,20 +251,20 @@ class accesos_VI
 
                                                     ?>
 
-                                                <option value="<?php echo $id_estado_civil; ?>">
-                                                    <?php echo  $nombre; ?> </option>
-                                                <?php
+                                            <option value="<?php echo $id_estado_civil; ?>">
+                                                <?php echo  $nombre; ?> </option>
+                                            <?php
                                                         }
                                                     }
                                                     ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-gp">
-                                            <label for="departamento"></label>
-                                            <select onchange="departamento1()" class="form-control" name="cod_dpto"
-                                                id="departamento">
-                                                <option value="">Seleccione Departamento</option>
-                                                <?php
+                                        </select>
+                                    </div>
+                                    <div class="form-gp">
+                                        <label for="departamento"></label>
+                                        <select onchange="departamento1()" class="form-control" name="cod_dpto"
+                                            id="departamento">
+                                            <option value="">Seleccione Departamento</option>
+                                            <?php
                                                     if ($arreglo_departamento) {
 
                                                         foreach ($arreglo_departamento as $objeto_departamento) {
@@ -235,38 +273,37 @@ class accesos_VI
 
                                                     ?>
 
-                                                <option value="<?php echo $cod_dpto; ?>">
-                                                    <?php echo  $nombre; ?> </option>
-                                                <?php
+                                            <option value="<?php echo $cod_dpto; ?>"><?php echo  $nombre; ?> </option>
+                                            <?php
                                                         }
                                                     }
                                                     ?>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-gp">
-                                            <label for="ciudad"></label>
-                                            <select class="form-control" name="cod_ciudad" id="ciudad">
-
-
-                                            </select>
-                                        </div>
-                                        <div class="submit-btn-area">
-                                            <button type="button" onclick="registrar()">Registrar <i
-                                                    class="ti-arrow-right"></i></button>
-                                        </div>
-                                        <div class="form-footer text-center mt-5">
-                                            <p class="change_link">Ya tienes cuenta? <a href="#signin"
-                                                    class="to_register">Inicia Sesion</a></p>
-                                        </div>
+                                        </select>
                                     </div>
-                                </form>
-                            </section>
+
+                                    <div class="form-gp">
+                                        <label for="ciudad"></label>
+                                        <select class="form-control" name="cod_ciudad" id="ciudad">
+
+
+                                        </select>
+                                    </div>
+                                    <div class="submit-btn-area">
+                                        <button type="button" onclick="registrar()">Registrar <i
+                                                class="ti-arrow-right"></i></button>
+                                    </div>
+                                    <div class="form-footer text-center mt-5">
+                                        <p class="change_link">Ya tienes cuenta? <a href="#signin"
+                                                class="to_register">Inicia Sesion</a></p>
+                                    </div>
                         </div>
+                        </form>
+                        </section>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 </body>
@@ -362,7 +399,7 @@ function iniciarSesion() {
 
     var cadena = new FormData(document.querySelector('#login'));
 
-    fetch('./controllers/accesos_CO.php', {
+    fetch('./controllers/accesos1_CO.php', {
             method: 'POST',
             body: cadena
         })

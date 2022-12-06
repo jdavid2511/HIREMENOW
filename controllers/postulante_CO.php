@@ -23,7 +23,6 @@ class postulante_CO{
       $hoja_vida = htmlentities($_POST['hoja_vida'], ENT_QUOTES);
       $fecha_nto = htmlentities($_POST['fecha_nto'], ENT_QUOTES);
       $direccion = htmlentities($_POST['direccion'], ENT_QUOTES);
-      $id_estado_civil = htmlentities($_POST['id_estado_civil'], ENT_QUOTES);
       $usuario = htmlentities($_POST['usuario'], ENT_QUOTES);
       $contrasena = htmlentities($_POST['contrasena'], ENT_QUOTES);
 
@@ -104,21 +103,28 @@ class postulante_CO{
             exit(json_encode($arreglo_respuesta));
       }
       
-      $postulante_MO -> actualizarPostulante($documento,$nombre1, $nombre2,$apellido1,$apellido2,$telefono,$correo,$huella_digital,$hoja_vida,$fecha_nto,$direccion,$id_estado_civil);
+      $postulante_MO -> actualizarPostulante($documento,$nombre1,$nombre2,$apellido1,$apellido2,$telefono,$correo,$huella_digital,$hoja_vida,$fecha_nto,$direccion);
+      $postulante_MO -> actualizaracceso($documento,$usuario,$contrasena);
       
       $actualizado = $conexion->filasAfectadas();
 
      if ($actualizado) {
 
-      $mensaje = "Registro Actualizado";
-      $estado = 'EXITO';
-    }
+            $mensaje= "Registro Actualizado";
+            $estado = 'EXITO';
+        }else{
 
-    $arreglo_respuesta = [
-      "estado" => $estado,
-      "mensaje" => $mensaje
-    ];
-            exit(json_encode($arreglo_respuesta));
+            $mensaje= "No se realizaron cambios";
+            $estado = 'ADVERTENCIA';
+        }
+  
+        $arreglo_respuesta = [
+            "estado" => $estado,
+            "mensaje"=> $mensaje
+        ];
+
+        exit(json_encode($arreglo_respuesta, true));
+            
       }
 }
 
